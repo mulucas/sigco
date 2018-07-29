@@ -10,30 +10,35 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import conecao.*;
-import modelo.Bolsista;
 import modelo.Professor;
 
 public class ProfessorDAO {
-	
+
 	private Connection connection;
 
 	public ProfessorDAO() {
 		this.connection = new ConnectionFactory().getConnection();
 	}
+
 	public void adiciona(Professor professor) {
-		 String sql = "INSERT INTO professor(nome,matricula,numeroAlunos) VALUES(?,?,?)";
-       try { 
-           PreparedStatement stmt = connection.prepareStatement(sql);
-           stmt.setString(1, professor.getNome());
-           stmt.setString(2, professor.getMatricula());
-           stmt.setString(3, professor.getQntdAlunos());
-           stmt.execute();
-           stmt.close();
-       } 
-       catch (SQLException u) { 
-           throw new RuntimeException(u);
-       }    
-   } 
+		int c = Integer.parseInt(professor.getQntdAlunos());
+		int d = c*12;
+		String vc = Integer.toString(d);
+		
+		String sql = "INSERT INTO professor(nome,matricula,numeroAlunos,cotasDisponiveis) VALUES(?,?,?,?)";
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setString(1, professor.getNome());
+			stmt.setString(2, professor.getMatricula());
+			stmt.setString(3, professor.getQntdAlunos());
+			stmt.setString(4, vc);
+			stmt.execute();
+			stmt.close();
+		} catch (SQLException u) {
+			throw new RuntimeException(u);
+		}
+	}
+
 	public void atualizar(Professor professor) {
 		if (professor != null) {
 			String sql = "UPDATE Professor SET NOME=?, MATRICULA=?, numeroAlunos=? WHERE ID=?";
@@ -43,7 +48,7 @@ public class ProfessorDAO {
 				stmt.setString(1, professor.getNome());
 				stmt.setString(2, professor.getMatricula());
 				stmt.setString(3, professor.getQntdAlunos());
-				
+				stmt.setInt(4, professor.getId());
 
 				stmt.execute();
 				JOptionPane.showMessageDialog(null, "Professor alterado com sucesso");
@@ -69,10 +74,23 @@ public class ProfessorDAO {
 			JOptionPane.showMessageDialog(null, "Erro ao excluir Professor do banco de dados " + e.getMessage());
 		}
 	}
+	public void addCota(int id, int cotas) {
+		
+		String sql = "UPDATE Professor SET cotasUsadas=? WHERE ID=?";
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setInt(1, cotas);
+			stmt.setInt(2, id);
+			stmt.execute();
+			stmt.close();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Erro ao add cotas no Professor do banco de dados " + e.getMessage());
+		}
+	}
 
 	public List<Professor> getProfessor() {
 		ArrayList<Professor> professores = new ArrayList<Professor>();
-		String sql = "SELECT * FROM Professor";
+		String sql = "SELECT * FROM PROFESSOR";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
@@ -83,6 +101,8 @@ public class ProfessorDAO {
 				professor.setNome(rs.getString("nome"));
 				professor.setMatricula(rs.getString("matricula"));
 				professor.setQntdAlunos(rs.getString("numeroAlunos"));
+				professor.setCotasUsadas(rs.getString("cotasUsadas"));
+				professor.setCotasDisponiveis(rs.getString("cotasDisponiveis"));
 				professores.add(professor);
 			}
 			rs.close();

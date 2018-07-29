@@ -75,7 +75,7 @@ public class FormProfessor extends JFrame implements ActionListener{
 		
 		lbCadastrarBolsista = new JLabel("CADASTRAR PROFESSOR");
 		lbCadastrarBolsista.setFont(new Font("Bell MT", Font.BOLD, 18));
-		lbCadastrarBolsista.setBounds(55, 25, 222, 14);
+		lbCadastrarBolsista.setBounds(55, 25, 272, 14);
 		contentPane.add(lbCadastrarBolsista);
 		
 		lbNome = new JLabel("NOME:");
@@ -87,7 +87,7 @@ public class FormProfessor extends JFrame implements ActionListener{
 		pnForm.add(lbMatricula);
 		
 		lbqntdAlunos = new JLabel("QUANTIDADE DE ALUNOS:");
-		lbqntdAlunos.setBounds(32, 129, 130, 29);
+		lbqntdAlunos.setBounds(32, 129, 150, 29);
 		pnForm.add(lbqntdAlunos);
 		
 		// --------------------------------JTextField------------------------
@@ -102,7 +102,7 @@ public class FormProfessor extends JFrame implements ActionListener{
 		tfMatricula.setColumns(10);
 		
 		tfqntdAlunos = new JTextField();
-		tfqntdAlunos.setBounds(215, 150, 60, 20);
+		tfqntdAlunos.setBounds(215, 133, 60, 20);
 		pnForm.add(tfqntdAlunos);
 		tfqntdAlunos.setColumns(10);
 		

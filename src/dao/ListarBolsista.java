@@ -92,11 +92,12 @@ public class ListarBolsista extends JPanel{
             int linhaSelecionada = -1;
             linhaSelecionada = tabela.getSelectedRow();
             if (linhaSelecionada >= 0) {
-                int idContato = (int) tabela.getValueAt(linhaSelecionada, 0);
-                AtualizarBolsista ib = new AtualizarBolsista(modelo, idContato, linhaSelecionada);
-                contentPane.removeAll();
+                int idBolsista = (int) tabela.getValueAt(linhaSelecionada, 0);
+                AtualizarBolsista ib = new AtualizarBolsista(modelo, idBolsista, linhaSelecionada);
+                /*contentPane.removeAll();
                 contentPane.add(ib);
-                contentPane.validate();
+                contentPane.validate();*/
+                ib.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(null, "É necesário selecionar uma linha.");
             }

@@ -23,8 +23,8 @@ public class FormBolsista extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane, pnForm;
-	private JTextField tfNome;
-	private JTextField tfMatricula;
+	public JTextField tfNome;
+	public JTextField tfMatricula;
 	private JButton btAdiconar, btLimpar;
 	private JComboBox cbCurso;
 

@@ -12,8 +12,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import gui.FormBolsista;
-import modelo.Bolsista;
 import modelo.Professor;
 
 public class ListarProfessor extends JPanel {
@@ -59,7 +57,7 @@ public class ListarProfessor extends JPanel {
 		modelo.addColumn("Id");
 		modelo.addColumn("Nome");
 		modelo.addColumn("Matricula");
-		modelo.addColumn("Numero de Alunos");
+		modelo.addColumn("Nº de Alunos");
 		modelo.addColumn("Disponivel");
 		modelo.addColumn("Usados");
 		// tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -84,8 +82,16 @@ public class ListarProfessor extends JPanel {
 	private class BtInserirBolsistaListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
-			FormBolsista formBolsista = new FormBolsista();
-			formBolsista.setVisible(true);
+			 int linhaSelecionada = -1;
+	            linhaSelecionada = tabela.getSelectedRow();
+	            if (linhaSelecionada >= 0) {
+	                int idProfessor = (int) tabela.getValueAt(linhaSelecionada, 0);
+	                int op =Integer.parseInt(JOptionPane.showInputDialog(null, "Digite a quantidade de utilizada: "));
+	                ProfessorDAO dao = new ProfessorDAO();
+	                dao.addCota(idProfessor, op);
+	            } else {
+	                JOptionPane.showMessageDialog(null, "É necesário selecionar uma linha.");
+	            }
 		}
 	}
 
@@ -95,8 +101,8 @@ public class ListarProfessor extends JPanel {
 			int linhaSelecionada = -1;
 			linhaSelecionada = tabela.getSelectedRow();
 			if (linhaSelecionada >= 0) {
-				int idContato = (int) tabela.getValueAt(linhaSelecionada, 0);
-				AtualizarBolsista ib = new AtualizarBolsista(modelo, idContato, linhaSelecionada);
+				int idProfessor = (int) tabela.getValueAt(linhaSelecionada, 0);
+				AtualizarBolsista ib = new AtualizarBolsista(modelo, idProfessor, linhaSelecionada);
 				contentPane.removeAll();
 				contentPane.add(ib);
 				contentPane.validate();
@@ -112,9 +118,9 @@ public class ListarProfessor extends JPanel {
 			int linhaSelecionada = -1;
 			linhaSelecionada = tabela.getSelectedRow();
 			if (linhaSelecionada >= 0) {
-				int idBolsista = (int) tabela.getValueAt(linhaSelecionada, 0);
-				BolsistaDAO dao = new BolsistaDAO();
-				dao.remover(idBolsista);
+				int idProfessor = (int) tabela.getValueAt(linhaSelecionada, 0);
+				ProfessorDAO dao = new ProfessorDAO();
+				dao.remover(idProfessor);
 				modelo.removeRow(linhaSelecionada);
 			} else {
 				JOptionPane.showMessageDialog(null, "É necesário selecionar uma linha.");

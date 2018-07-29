@@ -2,22 +2,22 @@ package modelo;
 
 public class Professor {
 
-	private String nome, matricula, qntdAlunos;
-	private int id,cotasDisponiveis, cotasUsadas;;
+	private String nome, matricula, qntdAlunos,cotasDisponiveis, cotasUsadas;;
+	private int id;
 
-	public int getCotasUsadas() {
+	public String getCotasUsadas() {
 		return cotasUsadas;
 	}
 
-	public void setCotasUsadas(int cotasUsadas) {
+	public void setCotasUsadas(String cotasUsadas) {
 		this.cotasUsadas = cotasUsadas;
 	}
 
-	public int getCotasDisponiveis() {
+	public String getCotasDisponiveis() {
 		return cotasDisponiveis;
 	}
 
-	public void setCotasDisponiveis(int cotasDisponiveis) {
+	public void setCotasDisponiveis(String cotasDisponiveis) {
 		this.cotasDisponiveis = cotasDisponiveis;
 	}
 	

@@ -102,8 +102,8 @@ public class BolsistaDAO {
 		String sql = "SELECT * FROM BOLSISTA WHERE ID=?";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
-			ResultSet rs = stmt.executeQuery();
 			stmt.setInt(1, id);
+			ResultSet rs = stmt.executeQuery();
 			rs = stmt.executeQuery();
 			while (rs.next()) {
 				bolsista.setId(rs.getInt("id"));
@@ -115,7 +115,7 @@ public class BolsistaDAO {
 			stmt.close();
 			connection.close();
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Erro ao listar BOLSISTA pelo id" + e.getMessage());
+			JOptionPane.showMessageDialog(null, "Erro ao listar BOLSISTA pelo id " + e.getMessage());
 		}
 		return bolsista;
 	}

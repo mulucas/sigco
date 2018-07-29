@@ -36,7 +36,7 @@ public class LoginFrame extends JFrame {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setTitle("COAPAC");
 		setResizable(false);
-		setLocationRelativeTo(null);
+		
 
 		pnPrincipal.setBackground(new Color(0, 153, 0));
 		pnPrincipal.setBorder(BorderFactory.createTitledBorder(null, "Sistema de controle de cotas", TitledBorder.RIGHT,
@@ -66,6 +66,7 @@ public class LoginFrame extends JFrame {
 		btEntrar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				System.setProperty("nome", txtNome.getText());
 				btEntrarActionPerformed(arg0);
 			}
 		});
@@ -148,6 +149,7 @@ public class LoginFrame extends JFrame {
 		layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(pnPrincipal,
 				GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
 		pack();
+		setLocationRelativeTo(null);
 	}
 
 	private void btSairActionPerformed(ActionEvent evt) {

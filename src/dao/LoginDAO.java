@@ -21,23 +21,24 @@ public class LoginDAO {
 			ResultSet rs = stmt.executeQuery();
 			boolean quebra = false;
 			while (rs.next()) {
-				if (nome.getText().equals(rs.getString("nome"))	&& senha.getText().equals(rs.getString("senha"))) {
+				if (nome.getText().equals(rs.getString("nome")) && senha.getText().equals(rs.getString("senha"))) {
 					quebra = true;
 					break;
 				} else {
-					quebra=false;
+					quebra = false;
 				}
-			}if (quebra) {
-				MenuPrincipal.abrir();				
-			}else {
-				System.out.println("nenhum");
+			}
+			if (quebra) {
+				MenuPrincipal.abrir();
+			} else {
+				JOptionPane.showMessageDialog(null, "Usuário ou senha incorreto!");
 			}
 			rs.close();
 			stmt.close();
 			fab.close();
-			
-		} catch (SQLException e) {
-		}
 
+		} catch (SQLException erro) {
+			JOptionPane.showMessageDialog(null, "ao entrar deu erro!" + erro);
+		}
 	}
 }

@@ -23,7 +23,6 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 
 	public MenuPrincipal() {
 		inicializarComponentes();
-		// definirEventos();
 	}
 
 	private void inicializarComponentes() {
