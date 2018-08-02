@@ -49,8 +49,9 @@ public class FormProfessor extends JFrame implements ActionListener{
 			} else {
 				ProfessorDAO dao = new ProfessorDAO();
 				dao.adiciona(professor);
-				JOptionPane.showMessageDialog(null, "Professor " + tfNome.getText() + " inserido com sucesso! ");
+				JOptionPane.showMessageDialog(null, "Professor " + tfNome.getText() + " inserido com sucesso! ");		
 				limparCampos(pnForm);
+				
 			}
         } else if (o == btLimpar) {
         	limparCampos(pnForm);      			

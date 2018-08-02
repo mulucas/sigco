@@ -119,4 +119,18 @@ public class BolsistaDAO {
 		}
 		return bolsista;
 	}
+
+	public void addCota(int idBolsista, int qntd) {
+		String sql = "UPDATE bolsista SET cotasUsadas=? WHERE ID=?";
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setInt(1, qntd);
+			stmt.setInt(2, idBolsista);
+			stmt.execute();
+			stmt.close();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Erro ao add cotas no Professor do banco de dados " + e.getMessage());
+		}
+		
+	}
 }

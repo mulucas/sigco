@@ -22,9 +22,9 @@ public class ProfessorDAO {
 
 	public void adiciona(Professor professor) {
 		int c = Integer.parseInt(professor.getQntdAlunos());
-		int d = c*12;
+		int d = c * 12;
 		String vc = Integer.toString(d);
-		
+
 		String sql = "INSERT INTO professor(nome,matricula,numeroAlunos,cotasDisponiveis) VALUES(?,?,?,?)";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
@@ -74,17 +74,28 @@ public class ProfessorDAO {
 			JOptionPane.showMessageDialog(null, "Erro ao excluir Professor do banco de dados " + e.getMessage());
 		}
 	}
-	public void addCota(int id, int cotas) {
-		
+
+	public void addCota(int idProfessor, int cotas) {
+
+		/*PreparedStatement sstmt;
+		try {
+			sstmt = connection.prepareStatement("select * from professor");
+			ResultSet rs = sstmt.executeQuery();
+			rs.next();
+			String d = rs.getString("cotasDisponiveis");
+		} catch (SQLException erro) {
+			erro.printStackTrace();
+		}*/
+
 		String sql = "UPDATE Professor SET cotasUsadas=? WHERE ID=?";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, cotas);
-			stmt.setInt(2, id);
+			stmt.setInt(2, idProfessor);
 			stmt.execute();
 			stmt.close();
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Erro ao add cotas no Professor do banco de dados " + e.getMessage());
+		} catch (Exception erro) {
+			JOptionPane.showMessageDialog(null, "Erro ao adicionar as cotas do Professor do banco de dados " + erro.getMessage());
 		}
 	}
 
@@ -101,8 +112,8 @@ public class ProfessorDAO {
 				professor.setNome(rs.getString("nome"));
 				professor.setMatricula(rs.getString("matricula"));
 				professor.setQntdAlunos(rs.getString("numeroAlunos"));
-				professor.setCotasUsadas(rs.getString("cotasUsadas"));
-				professor.setCotasDisponiveis(rs.getString("cotasDisponiveis"));
+				professor.setCotasUsadas(rs.getInt("cotasUsadas"));
+				professor.setCotasDisponiveis(rs.getInt("cotasDisponiveis"));
 				professores.add(professor);
 			}
 			rs.close();

@@ -2,6 +2,7 @@ package dao;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -12,6 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import funcoes.ColorRender;
 import modelo.Professor;
 
 public class ListarProfessor extends JPanel {
@@ -43,30 +45,32 @@ public class ListarProfessor extends JPanel {
 		painelBotoes.add(btEditar);
 		painelBotoes.add(btExcluir);
 		painelFundo.add(BorderLayout.SOUTH, painelBotoes);
-
 		add(painelFundo);
 		setSize(900, 700);
 		setVisible(true);
-		btInserir.addActionListener(new BtInserirBolsistaListener());
+		btInserir.addActionListener(new BtInserirListener());
 		btEditar.addActionListener(new BtEditarListener());
 		btExcluir.addActionListener(new BtExcluirListener());
 	}
 
 	private void criaJTable() {
 		tabela = new JTable(modelo);
+	
+		tabela.setPreferredScrollableViewportSize(new Dimension(650, 480));
+		tabela.setDefaultRenderer(Object.class, new ColorRender(1,0));
+
 		modelo.addColumn("Id");
 		modelo.addColumn("Nome");
 		modelo.addColumn("Matricula");
 		modelo.addColumn("Nº de Alunos");
 		modelo.addColumn("Disponivel");
 		modelo.addColumn("Usados");
-		// tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		tabela.getColumnModel().getColumn(0).setPreferredWidth(30);
 		tabela.getColumnModel().getColumn(1).setPreferredWidth(200);
-		tabela.getColumnModel().getColumn(2).setPreferredWidth(130);
-		tabela.getColumnModel().getColumn(3).setPreferredWidth(130);
-		tabela.getColumnModel().getColumn(4).setPreferredWidth(100);
-		tabela.getColumnModel().getColumn(5).setPreferredWidth(100);
+		tabela.getColumnModel().getColumn(2).setPreferredWidth(200);
+		tabela.getColumnModel().getColumn(3).setPreferredWidth(100);
+		tabela.getColumnModel().getColumn(4).setPreferredWidth(80);
+		tabela.getColumnModel().getColumn(5).setPreferredWidth(60);
 		pesquisar(modelo);
 	}
 
@@ -74,24 +78,23 @@ public class ListarProfessor extends JPanel {
 		modelo.setNumRows(0);
 		ProfessorDAO dao = new ProfessorDAO();
 		for (Professor prof : dao.getProfessor()) {
-			modelo.addRow(new Object[] { prof.getId(), prof.getNome(), prof.getMatricula(), prof.getQntdAlunos(),
-					prof.getCotasDisponiveis(), prof.getCotasUsadas() });
+			modelo.addRow(new Object[] { prof.getId(), prof.getNome(), prof.getMatricula(), prof.getQntdAlunos(),prof.getCotasDisponiveis(), prof.getCotasUsadas() });
 		}
 	}
 
-	private class BtInserirBolsistaListener implements ActionListener {
+	private class BtInserirListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
-			 int linhaSelecionada = -1;
-	            linhaSelecionada = tabela.getSelectedRow();
-	            if (linhaSelecionada >= 0) {
-	                int idProfessor = (int) tabela.getValueAt(linhaSelecionada, 0);
-	                int op =Integer.parseInt(JOptionPane.showInputDialog(null, "Digite a quantidade de utilizada: "));
-	                ProfessorDAO dao = new ProfessorDAO();
-	                dao.addCota(idProfessor, op);
-	            } else {
-	                JOptionPane.showMessageDialog(null, "É necesário selecionar uma linha.");
-	            }
+			int linhaSelecionada = -1;
+			linhaSelecionada = tabela.getSelectedRow();
+			if (linhaSelecionada >= 0) {
+				int idProfessor = (int) tabela.getValueAt(linhaSelecionada, 0);
+				int op = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite a quantidade de utilizada: "));
+				ProfessorDAO dao = new ProfessorDAO();
+				dao.addCota(idProfessor, op);
+			} else {
+				JOptionPane.showMessageDialog(null, "É necesário selecionar uma linha.");
+			}
 		}
 	}
 
@@ -103,9 +106,9 @@ public class ListarProfessor extends JPanel {
 			if (linhaSelecionada >= 0) {
 				int idProfessor = (int) tabela.getValueAt(linhaSelecionada, 0);
 				AtualizarBolsista ib = new AtualizarBolsista(modelo, idProfessor, linhaSelecionada);
-				contentPane.removeAll();
+				/*contentPane.removeAll();
 				contentPane.add(ib);
-				contentPane.validate();
+				contentPane.validate();*/
 			} else {
 				JOptionPane.showMessageDialog(null, "É necesário selecionar uma linha.");
 			}

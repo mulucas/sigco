@@ -2,8 +2,10 @@ package dao;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -11,7 +13,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import gui.FormBolsista;
+import funcoes.ColorRender;
+import gui.MenuPrincipal;
 import modelo.Bolsista;
 
 public class ListarBolsista extends JPanel{
@@ -43,7 +46,6 @@ public class ListarBolsista extends JPanel{
         painelBotoes.add(btEditar);
         painelBotoes.add(btExcluir);
         painelFundo.add(BorderLayout.SOUTH, painelBotoes);
- 
         add(painelFundo);
         setSize(900, 700);
         setVisible(true);
@@ -54,18 +56,21 @@ public class ListarBolsista extends JPanel{
  
     private void criaJTable() {
         tabela = new JTable(modelo);
+        
+        tabela.setPreferredScrollableViewportSize(new Dimension(650, 480));
+        tabela.setDefaultRenderer(Object.class, new ColorRender(2, 0));
+        
         modelo.addColumn("Id");
         modelo.addColumn("Nome");
         modelo.addColumn("Matricula");
         modelo.addColumn("Curso");
         modelo.addColumn("Disponivel");
         modelo.addColumn("Usados");
-        //tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         tabela.getColumnModel().getColumn(0).setPreferredWidth(30);
         tabela.getColumnModel().getColumn(1).setPreferredWidth(200);
         tabela.getColumnModel().getColumn(2).setPreferredWidth(200);
-        tabela.getColumnModel().getColumn(3).setPreferredWidth(130);
-        tabela.getColumnModel().getColumn(4).setPreferredWidth(60);
+        tabela.getColumnModel().getColumn(3).setPreferredWidth(100);
+        tabela.getColumnModel().getColumn(4).setPreferredWidth(80);
         tabela.getColumnModel().getColumn(5).setPreferredWidth(60);
         pesquisar(modelo);
     }
@@ -81,8 +86,25 @@ public class ListarBolsista extends JPanel{
     private class BtInserirBolsistaListener implements ActionListener {
  
         public void actionPerformed(ActionEvent e) {
-        	FormBolsista formBolsista = new FormBolsista();
-        	formBolsista.setVisible(true);
+        	int linhaSelecionada = -1;
+			linhaSelecionada = tabela.getSelectedRow();
+			
+			DefaultTableModel tableMode = (DefaultTableModel) tabela.getModel();
+			int row = tabela.getSelectedRow();
+			int c = (int) tableMode.getValueAt(row, 5);
+			
+			if (linhaSelecionada >= 0) {
+				int idBolsista = (int) tabela.getValueAt(linhaSelecionada, 0);
+				int qntdNova = Integer.parseInt(JOptionPane.showInputDialog(null,"Digite a quantidade de utilizada: "));
+				
+				int qntdAtualizar = c+qntdNova;
+				
+				BolsistaDAO dao = new BolsistaDAO();
+				dao.addCota(idBolsista, qntdAtualizar);
+				
+			} else {
+				JOptionPane.showMessageDialog(null, "É necesário selecionar uma linha.");
+			}
         }
     }
  

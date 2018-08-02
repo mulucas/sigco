@@ -18,13 +18,15 @@ import javax.swing.border.EmptyBorder;
 
 public class InicioPanel extends JPanel {
 
-	JButton btnprofessor,btnListagemBolsista,btnADDUprof,btnADDBolsista,btnADDUsuario,btnInformacoes,btnLogin,btnSair;
+	JButton btnListagemprofessor,btnListagemBolsista,btnADDUprof,btnADDBolsista,btnADDUsuario,btnInformacoes,btnLogin,btnSair;
 	LoginFrame login = new LoginFrame();
 	FormBolsista formBolsista = new FormBolsista();
 	FormProfessor formProfessor = new FormProfessor();
 	private static final long serialVersionUID = 1L;
+	MenuPrincipal menuPrincipal;
 	
-	public InicioPanel() {
+	public InicioPanel(MenuPrincipal menuPrincipal) {
+		this.menuPrincipal = menuPrincipal;
 		inicializaComponentes();
 		definirEventos();
 	}
@@ -50,10 +52,10 @@ public class InicioPanel extends JPanel {
 		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 16));
 		add(lblNewLabel);
 
-		btnprofessor = new JButton("");
-		btnprofessor.setBounds(160, 145, 50, 50);
-		btnprofessor.setIcon(new javax.swing.ImageIcon(getClass().getResource("professor.png")));
-		add(btnprofessor);
+		btnListagemprofessor = new JButton("");
+		btnListagemprofessor.setBounds(160, 145, 50, 50);
+		btnListagemprofessor.setIcon(new javax.swing.ImageIcon(getClass().getResource("professor.png")));
+		add(btnListagemprofessor);
 
 		btnListagemBolsista = new JButton("");
 		btnListagemBolsista.setBounds(260, 145, 50, 50);
@@ -142,12 +144,12 @@ public class InicioPanel extends JPanel {
 				System.exit(0);
 			}
 		});
-		/*btnLogin.addActionListener(new ActionListener() {		
+		btnLogin.addActionListener(new ActionListener() {		
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				login.setVisible(true);
+				menuPrincipal.trocarUsuario();
 			}
-		});*/
+		});
 		btnADDBolsista.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -166,12 +168,18 @@ public class InicioPanel extends JPanel {
 				openURL("https://www.youtube.com/");				
 			}
 		});
-		/*btnListagemBolsista.addActionListener(new ActionListener() {			
+		btnListagemBolsista.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-								
+				menuPrincipal.listarBolsistas();
 			}
-		});*/
+		});
+		btnListagemprofessor.addActionListener(new ActionListener() {		
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				menuPrincipal.listarProfessores();				
+			}
+		});
 	}
 	 public static void openURL(String url) {
 	        String osName = System.getProperty("os.name");

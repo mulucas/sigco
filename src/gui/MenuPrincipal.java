@@ -1,10 +1,8 @@
 package gui;
 
-import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-import dao.BolsistaDAO;
 import dao.ListarBolsista;
 import dao.ListarProfessor;
 
@@ -14,12 +12,13 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 	private JMenuBar mnBarra;
 	private JMenu mnInicio, mnCadastro, mnlistar, mnConfig;
 	private JMenuItem miSair, miListaBolsista, miListaProfessor, miCadastrarProfessor, miCadastrarBolsista,
-			miPainelPrincipal, miTrocarUsuario, miCadastrarUsuario;
+			miPainelInicial, miTrocarUsuario, miCadastrarUsuario;
 	FormBolsista formBolsista = new FormBolsista();
 	FormProfessor formProfessor = new FormProfessor();
-	InicioPanel jpprincipal = new InicioPanel();
+	InicioPanel jpprincipal = new InicioPanel(this);
 	ListarProfessor listaProfessor = new ListarProfessor();
 	ListarBolsista listaBolsista = new ListarBolsista();
+	JPanel panelTrocar = null;
 
 	public MenuPrincipal() {
 		inicializarComponentes();
@@ -52,11 +51,11 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 		miListaProfessor = new JMenuItem("Professor");
 		miCadastrarBolsista = new JMenuItem("Bolsista");
 		miCadastrarProfessor = new JMenuItem("Professor");
-		miPainelPrincipal = new JMenuItem("Painel Principal");
+		miPainelInicial = new JMenuItem("Painel Principal");
 		miTrocarUsuario = new JMenuItem("Trocar Usuario");
 		miCadastrarUsuario = new JMenuItem("Cadastrar Usuário");
 
-		miPainelPrincipal.addActionListener(this);
+		miPainelInicial.addActionListener(this);
 		miCadastrarBolsista.addActionListener(this);
 		miCadastrarProfessor.addActionListener(this);
 		miListaBolsista.addActionListener(this);
@@ -65,7 +64,7 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 		miSair.addActionListener(this);
 
 		// -----------------------add os itens--------
-		mnInicio.add(miPainelPrincipal);
+		mnInicio.add(miPainelInicial);
 		mnInicio.add(miTrocarUsuario);
 		mnlistar.add(miListaBolsista);
 		mnlistar.add(miListaProfessor);
@@ -84,45 +83,59 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 	}
 	 
 	public void actionPerformed(ActionEvent e) {
-		JPanel panelTrocar = null;
+		
 		Object o = e.getSource();
 		if (o == miCadastrarBolsista) {
 			formBolsista.setVisible(true);
 		} else if (o == miCadastrarProfessor) {
 			formProfessor.setVisible(true);
 		} else if (o == miListaBolsista) {
-			panelTrocar = listaBolsista;
-			getContentPane().removeAll();
-			getContentPane().add(panelTrocar);
-			revalidate();
-			repaint();
+			listarBolsistas();
 		} else if (o == miListaProfessor) {
-			panelTrocar = listaProfessor;
-			getContentPane().removeAll();
-			getContentPane().add(panelTrocar);
-			revalidate();
-			repaint();
+			listarProfessores();
 		} else if (o == miTrocarUsuario) {
-			dispose();
-			LoginFrame f = new LoginFrame();
-			f.setVisible(true);
-		} else if (o == miPainelPrincipal) {
-			panelTrocar = jpprincipal;
-			getContentPane().removeAll();
-			getContentPane().add(panelTrocar);
-			revalidate();
-			repaint();
+			trocarUsuario();
+		} else if (o == miPainelInicial) {
+			panelInicial();
 		} else if (o == miSair) {
 			System.exit(0);
 		}
+	}
+	
+	public void panelInicial() {
+		panelTrocar = jpprincipal;
+		getContentPane().removeAll();
+		getContentPane().add(panelTrocar);
+		revalidate();
+		repaint();
+	}
+	
+	public void listarBolsistas() {
+		panelTrocar = listaBolsista;
+		getContentPane().removeAll();
+		getContentPane().add(panelTrocar);
+		revalidate();
+		repaint();
+	}
+	public void listarProfessores() {
+		panelTrocar = listaProfessor;
+		getContentPane().removeAll();
+		getContentPane().add(panelTrocar);
+		revalidate();
+		repaint();
+	}
+	
+	public void trocarUsuario() {
+		dispose();
+		LoginFrame telaLogin = new LoginFrame();
+		telaLogin.setVisible(true);
 	}
 
 	public static void abrir() {
 		MenuPrincipal frame = new MenuPrincipal();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		Dimension tela = Toolkit.getDefaultToolkit().getScreenSize();
-		//frame.setLocation((tela.width - frame.getSize().width), (tela.height - frame.getSize().height));
 		frame.setLocationRelativeTo(null);
+		frame.setResizable(false);
 		frame.setVisible(true);
 	}
 }
