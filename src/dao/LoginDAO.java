@@ -11,9 +11,25 @@ import javax.swing.JTextField;
 
 import conecao.ConnectionFactory;
 import gui.MenuPrincipal;
+import modelo.Bolsista;
 
 public class LoginDAO {
 
+	private Connection connection = new ConnectionFactory().getConnection();;
+	
+	public void adicionaUsuario(JTextField nome, JTextField senha) {
+		String sql = "INSERT INTO login(nome,senha) VALUES(?,?)";
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setString(1, nome.getText());
+			stmt.setString(2, senha.getText());
+			stmt.execute();
+			stmt.close();
+		} catch (SQLException u) {
+			throw new RuntimeException(u);
+		}
+	}
+	
 	public void acessarSistema(JTextField nome, JPasswordField senha) {
 		try {
 			Connection fab = new ConnectionFactory().getConnection();

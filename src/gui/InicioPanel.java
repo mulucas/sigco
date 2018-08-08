@@ -22,6 +22,7 @@ public class InicioPanel extends JPanel {
 	LoginFrame login = new LoginFrame();
 	FormBolsista formBolsista = new FormBolsista();
 	FormProfessor formProfessor = new FormProfessor();
+	FormUsuario formUsuario = new FormUsuario();
 	private static final long serialVersionUID = 1L;
 	MenuPrincipal menuPrincipal;
 	
@@ -154,6 +155,12 @@ public class InicioPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				formBolsista.setVisible(true);		
+			}
+		});
+		btnADDUsuario.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				formUsuario.setVisible(true);
 			}
 		});
 		btnADDUprof.addActionListener(new ActionListener() {

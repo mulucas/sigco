@@ -15,6 +15,7 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 			miPainelInicial, miTrocarUsuario, miCadastrarUsuario;
 	FormBolsista formBolsista = new FormBolsista();
 	FormProfessor formProfessor = new FormProfessor();
+	FormUsuario formUsuario = new FormUsuario();
 	InicioPanel jpprincipal = new InicioPanel(this);
 	ListarProfessor listaProfessor = new ListarProfessor();
 	ListarBolsista listaBolsista = new ListarBolsista();
@@ -58,6 +59,7 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 		miPainelInicial.addActionListener(this);
 		miCadastrarBolsista.addActionListener(this);
 		miCadastrarProfessor.addActionListener(this);
+		miCadastrarUsuario.addActionListener(this);
 		miListaBolsista.addActionListener(this);
 		miListaProfessor.addActionListener(this);
 		miTrocarUsuario.addActionListener(this);
@@ -89,7 +91,10 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 			formBolsista.setVisible(true);
 		} else if (o == miCadastrarProfessor) {
 			formProfessor.setVisible(true);
-		} else if (o == miListaBolsista) {
+		}else if (o == miCadastrarUsuario) {
+			formUsuario.setVisible(true);
+		}
+		else if (o == miListaBolsista) {
 			listarBolsistas();
 		} else if (o == miListaProfessor) {
 			listarProfessores();

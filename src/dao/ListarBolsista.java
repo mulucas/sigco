@@ -49,7 +49,7 @@ public class ListarBolsista extends JPanel{
         add(painelFundo);
         setSize(900, 700);
         setVisible(true);
-        btInserir.addActionListener(new BtInserirBolsistaListener());
+        btInserir.addActionListener(new BtInserirCotasListener());
         btEditar.addActionListener(new BtEditarListener());
         btExcluir.addActionListener(new BtExcluirListener());
     }
@@ -83,7 +83,7 @@ public class ListarBolsista extends JPanel{
         }
     }
  
-    private class BtInserirBolsistaListener implements ActionListener {
+    private class BtInserirCotasListener implements ActionListener {
  
         public void actionPerformed(ActionEvent e) {
         	int linhaSelecionada = -1;
@@ -95,12 +95,13 @@ public class ListarBolsista extends JPanel{
 			
 			if (linhaSelecionada >= 0) {
 				int idBolsista = (int) tabela.getValueAt(linhaSelecionada, 0);
-				int qntdNova = Integer.parseInt(JOptionPane.showInputDialog(null,"Digite a quantidade de utilizada: "));
+				int qntdNova = Integer.parseInt(JOptionPane.showInputDialog(null,"Digite a quantidade utilizada: "));
 				
 				int qntdAtualizar = c+qntdNova;
 				
 				BolsistaDAO dao = new BolsistaDAO();
 				dao.addCota(idBolsista, qntdAtualizar);
+				pesquisar(modelo);
 				
 			} else {
 				JOptionPane.showMessageDialog(null, "É necesário selecionar uma linha.");

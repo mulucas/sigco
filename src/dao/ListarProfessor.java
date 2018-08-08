@@ -48,16 +48,16 @@ public class ListarProfessor extends JPanel {
 		add(painelFundo);
 		setSize(900, 700);
 		setVisible(true);
-		btInserir.addActionListener(new BtInserirListener());
+		btInserir.addActionListener(new BtInserirCotasListener());
 		btEditar.addActionListener(new BtEditarListener());
 		btExcluir.addActionListener(new BtExcluirListener());
 	}
 
 	private void criaJTable() {
 		tabela = new JTable(modelo);
-	
+
 		tabela.setPreferredScrollableViewportSize(new Dimension(650, 480));
-		tabela.setDefaultRenderer(Object.class, new ColorRender(1,0));
+		tabela.setDefaultRenderer(Object.class, new ColorRender(1, 0));
 
 		modelo.addColumn("Id");
 		modelo.addColumn("Nome");
@@ -78,20 +78,31 @@ public class ListarProfessor extends JPanel {
 		modelo.setNumRows(0);
 		ProfessorDAO dao = new ProfessorDAO();
 		for (Professor prof : dao.getProfessor()) {
-			modelo.addRow(new Object[] { prof.getId(), prof.getNome(), prof.getMatricula(), prof.getQntdAlunos(),prof.getCotasDisponiveis(), prof.getCotasUsadas() });
+			modelo.addRow(new Object[] { prof.getId(), prof.getNome(), prof.getMatricula(), prof.getQntdAlunos(),
+					prof.getCotasDisponiveis(), prof.getCotasUsadas() });
 		}
 	}
 
-	private class BtInserirListener implements ActionListener {
+	private class BtInserirCotasListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
 			int linhaSelecionada = -1;
 			linhaSelecionada = tabela.getSelectedRow();
+
+			DefaultTableModel tableMode = (DefaultTableModel) tabela.getModel();
+			int row = tabela.getSelectedRow();
+			int c = (int) tableMode.getValueAt(row, 5);
+
 			if (linhaSelecionada >= 0) {
 				int idProfessor = (int) tabela.getValueAt(linhaSelecionada, 0);
-				int op = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite a quantidade de utilizada: "));
+				int qntdNova = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite a quantidade utilizada: "));
+
+				int qntdAtualizar = c + qntdNova;
+				
 				ProfessorDAO dao = new ProfessorDAO();
-				dao.addCota(idProfessor, op);
+				dao.addCota(idProfessor, qntdAtualizar);
+				pesquisar(modelo);
+				
 			} else {
 				JOptionPane.showMessageDialog(null, "É necesário selecionar uma linha.");
 			}
@@ -106,9 +117,9 @@ public class ListarProfessor extends JPanel {
 			if (linhaSelecionada >= 0) {
 				int idProfessor = (int) tabela.getValueAt(linhaSelecionada, 0);
 				AtualizarBolsista ib = new AtualizarBolsista(modelo, idProfessor, linhaSelecionada);
-				/*contentPane.removeAll();
-				contentPane.add(ib);
-				contentPane.validate();*/
+				/*
+				 * contentPane.removeAll(); contentPane.add(ib); contentPane.validate();
+				 */
 			} else {
 				JOptionPane.showMessageDialog(null, "É necesário selecionar uma linha.");
 			}
