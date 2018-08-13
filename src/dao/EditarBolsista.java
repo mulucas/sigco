@@ -1,8 +1,8 @@
 package dao;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,53 +11,35 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
 
-import gui.FormBolsista;
 import modelo.Bolsista;
 
-public class AtualizarBolsista extends JFrame {
+public class EditarBolsista extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private DefaultTableModel modelo = new DefaultTableModel();
-	private JPanel painelFundo;
-	private JButton btSalvar;
-	
-	private JLabel lbNome;
-	private JLabel lbMatricula;
-	private JLabel lbCurso;
-	private JLabel lbId;
-	private JTextField txNome;
-	private JTextField txId;
-	
-	private JTextField tfCurso;
 	private JPanel contentPane, pnForm;
-	public JTextField tfNome;
-	public JTextField tfMatricula;
-	private JButton btAdiconar, btLimpar;
-	private JComboBox cbCurso;
-	
-	Bolsista bolsista;
-	private int linhaSelecionada;
 
-	public AtualizarBolsista(DefaultTableModel md, int id, int linha) {
-		modelo = md;
-		BolsistaDAO dao = new BolsistaDAO();
+	JLabel lbCadastrarBolsista, lbNome, lbMatricula, lbCurso,lbId;
+	private JTextField tfId, tfNome, tfMatricula;
+	private JButton btAlterar, btLimpar;
+	private JComboBox cbCurso;
+
+	Bolsista bolsista;
+
+	public EditarBolsista(int id) {
+		DAOBolsista dao = new DAOBolsista();
 		bolsista = dao.getBolsistaById(id);
-		criaJanela();
-		FormBolsista fb = new FormBolsista();
-		fb.tfNome.setText(bolsista.getNome());
-		fb.setVisible(true);
-		// txId.setText(Integer.toString(bolsista.getId()));
 		
-		  txNome.setText(bolsista.getNome());
-		  tfMatricula.setText(bolsista.getMatricula());
-		  tfCurso.setText(bolsista.getCurso());
-		 
-		linhaSelecionada = linha;
+		criaJanela();
+		setVisible(true);
+
+		tfId.setText(Integer.toString(bolsista.getId()));
+		tfNome.setText(bolsista.getNome());
+		tfMatricula.setText(bolsista.getMatricula());
 
 	}
 
@@ -70,7 +52,6 @@ public class AtualizarBolsista extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
 		// --------------------------------JPANEL---------------------------------------
 		pnForm = new JPanel();
 		pnForm.setBackground(Color.WHITE);
@@ -78,20 +59,24 @@ public class AtualizarBolsista extends JFrame {
 		contentPane.add(pnForm);
 		pnForm.setLayout(null);
 
-		JLabel lbCadastrarBolsista = new JLabel("CADASTRAR BOLSISTA");
+		lbCadastrarBolsista = new JLabel("CADASTRAR BOLSISTA");
 		lbCadastrarBolsista.setFont(new Font("Bell MT", Font.BOLD, 18));
 		lbCadastrarBolsista.setBounds(55, 25, 222, 14);
 		contentPane.add(lbCadastrarBolsista);
 
-		JLabel lbNome = new JLabel("NOME:");
-		lbNome.setBounds(32, 29, 78, 29);
+		lbId = new JLabel("ID:");
+		lbId.setBounds(32, 13, 170, 20);
+		pnForm.add(lbId);
+		
+		lbNome = new JLabel("NOME:");
+		lbNome.setBounds(32, 48, 78, 29);
 		pnForm.add(lbNome);
 
-		JLabel lbMatricula = new JLabel("MATRICULA:");
-		lbMatricula.setBounds(32, 79, 78, 29);
+		lbMatricula = new JLabel("MATRICULA:");
+		lbMatricula.setBounds(32, 85, 78, 29);
 		pnForm.add(lbMatricula);
 
-		JLabel lbCurso = new JLabel("CURSO:");
+		lbCurso = new JLabel("CURSO:");
 		lbCurso.setBounds(32, 127, 78, 29);
 		pnForm.add(lbCurso);
 
@@ -103,51 +88,68 @@ public class AtualizarBolsista extends JFrame {
 		pnForm.add(cbCurso);
 
 		// --------------------------------JTextField---------------------------------------
+		tfId = new JTextField();
+		tfId.setEnabled(false);
+		tfId.setBounds(120, 13, 170, 20);
+		pnForm.add(tfId);
+		tfId.setColumns(10);
+		
 		tfNome = new JTextField();
-		tfNome.setBounds(120, 33, 170, 20);
+		tfNome.setBounds(120, 53, 170, 20);
 		pnForm.add(tfNome);
 		tfNome.setColumns(10);
 
+
 		tfMatricula = new JTextField();
-		tfMatricula.setBounds(120, 83, 170, 20);
+		tfMatricula.setBounds(120, 89, 170, 20);
 		pnForm.add(tfMatricula);
 		tfMatricula.setColumns(10);
 
 		// --------------------------------JButton---------------------------------------
-		btAdiconar = new JButton("ADICIONAR");
-		btAdiconar.setBounds(45, 194, 117, 23);
-		//btAdiconar.addActionListener(this);
-		pnForm.add(btAdiconar);
+		btAlterar = new JButton("ALTERAR");
+		btAlterar.setBounds(45, 194, 117, 23);
+		btAlterar.addActionListener(new BtAlterarListener());
+		pnForm.add(btAlterar);
 
 		btLimpar = new JButton("LIMPAR");
 		btLimpar.setBounds(168, 194, 117, 23);
-		//btLimpar.addActionListener(this);
+		btLimpar.addActionListener(new BtLimparListener());
 		pnForm.add(btLimpar);
 	}
 
-	private class BtSalvarListener implements ActionListener {
+	private class BtAlterarListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
 			Bolsista bolsista = new Bolsista();
-			bolsista.setId(Integer.parseInt(txId.getText()));
-			bolsista.setNome(txNome.getText());
+			bolsista.setId(Integer.parseInt(tfId.getText()));
+			bolsista.setNome(tfNome.getText());
 			bolsista.setMatricula(tfMatricula.getText());
-			bolsista.setCurso(tfCurso.getText());
+			bolsista.setCurso(cbCurso.getSelectedItem().toString());
 
-			BolsistaDAO dao = new BolsistaDAO();
-			dao.atualizar(bolsista);
-			modelo.removeRow(linhaSelecionada);
-			modelo.addRow(new Object[] { bolsista.getId(), bolsista.getNome(), bolsista.getMatricula(),
-					bolsista.getCurso() });
+			if ((tfNome.getText().isEmpty()) || (tfMatricula.getText().isEmpty())
+					|| (cbCurso.getSelectedItem().equals("SELECIONAR..."))) {
+				JOptionPane.showMessageDialog(null, "Os campos não podem retornar vazios");
+			} else {
+				DAOBolsista dao = new DAOBolsista();
+				dao.atualizar(bolsista);
+				dispose();
+			}
 		}
 	}
 
 	private class BtLimparListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
-			txNome.setText("");
-			tfMatricula.setText("");
-			tfCurso.setText("");
+			limparCampos(pnForm);
+		}
+	}
+
+	private void limparCampos(JPanel container) {
+		Component components[] = container.getComponents();
+		for (Component component : components) {
+			if (component instanceof JTextField) {
+				((JTextField) component).setText("");
+			}
 		}
 	}
 }

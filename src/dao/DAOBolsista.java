@@ -13,11 +13,11 @@ import javax.swing.table.DefaultTableModel;
 import conecao.*;
 import modelo.Bolsista;
 
-public class BolsistaDAO {
+public class DAOBolsista {
 
 	private Connection connection;
 
-	public BolsistaDAO() {
+	public DAOBolsista() {
 		this.connection = new ConnectionFactory().getConnection();
 	}
 
@@ -45,7 +45,7 @@ public class BolsistaDAO {
 				stmt.setString(1, bolsista.getNome());
 				stmt.setString(2, bolsista.getMatricula());
 				stmt.setString(3, bolsista.getCurso());
-
+				stmt.setInt(4, bolsista.getId());
 				stmt.execute();
 				JOptionPane.showMessageDialog(null, "BOLSISTA alterado com sucesso");
 				stmt.close();
@@ -129,8 +129,18 @@ public class BolsistaDAO {
 			stmt.execute();
 			stmt.close();
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Erro ao add cotas no Professor do banco de dados " + e.getMessage());
+			JOptionPane.showMessageDialog(null, "Erro ao add cotas no bolsista do banco de dados " + e.getMessage());
 		}
-		
+	}
+	public void zerarCota(int linha ) {
+		String sql = "UPDATE bolsista SET cotasUsadas=? ";
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setInt(1, 0);
+			stmt.execute();
+			stmt.close();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Erro ao zerar as cotas dos professores" + e.getMessage());
+		}
 	}
 }

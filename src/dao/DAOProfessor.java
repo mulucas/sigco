@@ -12,11 +12,11 @@ import javax.swing.JOptionPane;
 import conecao.*;
 import modelo.Professor;
 
-public class ProfessorDAO {
+public class DAOProfessor {
 
 	private Connection connection;
 
-	public ProfessorDAO() {
+	public DAOProfessor() {
 		this.connection = new ConnectionFactory().getConnection();
 	}
 
@@ -49,7 +49,6 @@ public class ProfessorDAO {
 				stmt.setString(2, professor.getMatricula());
 				stmt.setString(3, professor.getQntdAlunos());
 				stmt.setInt(4, professor.getId());
-
 				stmt.execute();
 				JOptionPane.showMessageDialog(null, "Professor alterado com sucesso");
 				stmt.close();
@@ -72,30 +71,6 @@ public class ProfessorDAO {
 			stmt.close();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Erro ao excluir Professor do banco de dados " + e.getMessage());
-		}
-	}
-
-	public void addCota(int idProfessor, int cotas) {
-
-		/*PreparedStatement sstmt;
-		try {
-			sstmt = connection.prepareStatement("select * from professor");
-			ResultSet rs = sstmt.executeQuery();
-			rs.next();
-			String d = rs.getString("cotasDisponiveis");
-		} catch (SQLException erro) {
-			erro.printStackTrace();
-		}*/
-
-		String sql = "UPDATE Professor SET cotasUsadas=? WHERE ID=?";
-		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setInt(1, cotas);
-			stmt.setInt(2, idProfessor);
-			stmt.execute();
-			stmt.close();
-		} catch (Exception erro) {
-			JOptionPane.showMessageDialog(null, "Erro ao adicionar as cotas do Professor do banco de dados " + erro.getMessage());
 		}
 	}
 
@@ -130,8 +105,8 @@ public class ProfessorDAO {
 		String sql = "SELECT * FROM Professor WHERE ID=?";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
-			ResultSet rs = stmt.executeQuery();
 			stmt.setInt(1, id);
+			ResultSet rs = stmt.executeQuery();
 			rs = stmt.executeQuery();
 			while (rs.next()) {
 				professor.setId(rs.getInt("id"));
@@ -146,5 +121,30 @@ public class ProfessorDAO {
 			JOptionPane.showMessageDialog(null, "Erro ao listar Professor pelo id" + e.getMessage());
 		}
 		return professor;
+	}
+	
+	public void addCota(int idProfessor, int cotas) {
+		String sql = "UPDATE Professor SET cotasUsadas=? WHERE ID=?";
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setInt(1, cotas);
+			stmt.setInt(2, idProfessor);
+			stmt.execute();
+			stmt.close();
+		} catch (Exception erro) {
+			JOptionPane.showMessageDialog(null, "Erro ao adicionar as cotas do Professor do banco de dados " + erro.getMessage());
+		}
+	}
+	
+	public void zerarCota(int linha ) {
+		String sql = "UPDATE professor SET cotasUsadas=? ";
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setInt(1, 0);
+			stmt.execute();
+			stmt.close();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "erro ao zerar as cotas dos professores " + e.getMessage());
+		}
 	}
 }

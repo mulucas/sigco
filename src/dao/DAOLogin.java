@@ -13,7 +13,7 @@ import conecao.ConnectionFactory;
 import gui.MenuPrincipal;
 import modelo.Bolsista;
 
-public class LoginDAO {
+public class DAOLogin {
 
 	private Connection connection = new ConnectionFactory().getConnection();;
 	
@@ -30,21 +30,21 @@ public class LoginDAO {
 		}
 	}
 	
-	public void acessarSistema(JTextField nome, JPasswordField senha) {
+	public boolean acessarSistema(JTextField nome, JPasswordField senha) {
+		boolean verificaUsuarioNoBanco = false;
 		try {
 			Connection fab = new ConnectionFactory().getConnection();
 			PreparedStatement stmt = fab.prepareStatement("select * from login");
 			ResultSet rs = stmt.executeQuery();
-			boolean quebra = false;
 			while (rs.next()) {
 				if (nome.getText().equals(rs.getString("nome")) && senha.getText().equals(rs.getString("senha"))) {
-					quebra = true;
+					verificaUsuarioNoBanco = true;
 					break;
 				} else {
-					quebra = false;
+					verificaUsuarioNoBanco = false;
 				}
 			}
-			if (quebra) {
+			if (verificaUsuarioNoBanco) {
 				MenuPrincipal.abrir();
 			} else {
 				JOptionPane.showMessageDialog(null, "Usuário ou senha incorreto!");
@@ -56,5 +56,6 @@ public class LoginDAO {
 		} catch (SQLException erro) {
 			JOptionPane.showMessageDialog(null, "ao entrar deu erro!" + erro);
 		}
+		return verificaUsuarioNoBanco;
 	}
 }

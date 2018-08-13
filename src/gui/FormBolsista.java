@@ -15,8 +15,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
-import dao.BolsistaDAO;
+import dao.DAOBolsista;
+import dao.ListarBolsista;
 import modelo.Bolsista;
 
 public class FormBolsista extends JFrame implements ActionListener {
@@ -41,7 +43,7 @@ public class FormBolsista extends JFrame implements ActionListener {
 					|| (cbCurso.getSelectedItem().equals("SELECIONAR..."))) {
 				JOptionPane.showMessageDialog(null, "Os campos não podem retornar vazios");
 			} else {
-				BolsistaDAO dao = new BolsistaDAO();
+				DAOBolsista dao = new DAOBolsista();
 				dao.adiciona(bolsista);
 				JOptionPane.showMessageDialog(null, "Usuário " + tfNome.getText() + " inserido com sucesso! ");
 				limparCampos(pnForm);

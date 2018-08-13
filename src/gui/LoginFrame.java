@@ -5,7 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
-import dao.LoginDAO;
+import dao.DAOLogin;
 
 public class LoginFrame extends JFrame {
 
@@ -18,7 +18,7 @@ public class LoginFrame extends JFrame {
 	private JLabel lbSenha;
 	private JTextField txtNome;
 	private JPasswordField txtSenha;
-	LoginDAO logindao = new LoginDAO();
+	DAOLogin logindao = new DAOLogin();
 
 	public LoginFrame() {
 		initComponents();
@@ -157,8 +157,10 @@ public class LoginFrame extends JFrame {
 	}
 
 	private void btEntrarActionPerformed(ActionEvent evt) {
-		logindao.acessarSistema(txtNome,txtSenha);
-		dispose();
+		boolean c=logindao.acessarSistema(txtNome,txtSenha);
+		if (c) {
+			dispose();
+		}
 	}
 	
 	public static void main(String args[]) {

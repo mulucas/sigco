@@ -11,35 +11,37 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import dao.LoginDAO;
+import dao.DAOLogin;
 
 public class FormUsuario extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane, pnForm;
 	public JTextField tfNome;
-	public JTextField tfSenhaOne;
-	public JTextField tfSenhaTwo;
+	public JPasswordField tfSenhaOne;
+	public JPasswordField tfSenhaTwo;
 	private JButton btAdiconar, btLimpar;
 
 	// --------------------------------METODO-PARA-AS-ACÕES-DOS-BOTÕES---------------------------------------
+	@SuppressWarnings("deprecation")
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if (o == btAdiconar) {
 			if (tfSenhaOne.getText().equals(tfSenhaTwo.getText())) {
 				if ((tfNome.getText().isEmpty()) || (tfSenhaTwo.getText().isEmpty())) {
-					JOptionPane.showMessageDialog(null, "Os campos não podem retornar vazios");
+					JOptionPane.showMessageDialog(null, "Preencher todos os campos");
 				} else {
-					LoginDAO loginDAO = new LoginDAO();
+					DAOLogin loginDAO = new DAOLogin();
 					loginDAO.adicionaUsuario(tfNome, tfSenhaTwo);
 					JOptionPane.showMessageDialog(null, "Usuário " + tfNome.getText() + " inserido com sucesso! ");
 					limparCampos(pnForm);
 				}
 			}else {
-				JOptionPane.showMessageDialog(null, "as senhas não foram informada iguais");
+				JOptionPane.showMessageDialog(null, "As senhas não foram informado corretamente");
 			}
 
 		} else if (o == btLimpar) {
@@ -98,12 +100,12 @@ public class FormUsuario extends JFrame implements ActionListener {
 		pnForm.add(tfNome);
 		tfNome.setColumns(10);
 
-		tfSenhaTwo = new JTextField();
+		tfSenhaTwo = new JPasswordField();
 		tfSenhaTwo.setBounds(120, 83, 90, 20);
 		pnForm.add(tfSenhaTwo);
 		tfSenhaTwo.setColumns(10);
 		
-		tfSenhaOne = new JTextField();
+		tfSenhaOne = new JPasswordField();
 		tfSenhaOne.setBounds(120, 130, 90, 20);
 		pnForm.add(tfSenhaOne);
 		tfSenhaOne.setColumns(10);

@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import dao.ProfessorDAO;
+import dao.DAOProfessor;
 import modelo.Professor;
 
 public class FormProfessor extends JFrame implements ActionListener{
@@ -47,7 +47,7 @@ public class FormProfessor extends JFrame implements ActionListener{
 			if ((tfNome.getText().isEmpty()) || (tfMatricula.getText().isEmpty())||(tfqntdAlunos.getText().isEmpty())) {
 				JOptionPane.showMessageDialog(null, "Os campos não podem retornar vazios");
 			} else {
-				ProfessorDAO dao = new ProfessorDAO();
+				DAOProfessor dao = new DAOProfessor();
 				dao.adiciona(professor);
 				JOptionPane.showMessageDialog(null, "Professor " + tfNome.getText() + " inserido com sucesso! ");		
 				limparCampos(pnForm);
