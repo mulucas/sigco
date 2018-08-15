@@ -66,7 +66,13 @@ public class ListarProfessor extends JPanel {
 	}
 
 	private void criaJTable() {
-		tabela = new JTable(modelo);
+		tabela = new JTable(modelo) {
+			@Override
+			public boolean isCellEditable(int arg0, int arg1) {
+				return false;
+			}
+		};
+		
 
 		tabela.setPreferredScrollableViewportSize(new Dimension(650, 480));
 		tabela.setDefaultRenderer(Object.class, new ColorRender(1, 0));
@@ -95,10 +101,6 @@ public class ListarProfessor extends JPanel {
 		});
 	}
 
-	private boolean isCellEditable(int row) {
-		return false;
-	}
-	
 	public static void pesquisar(DefaultTableModel modelo) {
 		modelo.setNumRows(0);
 		DAOProfessor dao = new DAOProfessor();

@@ -67,7 +67,12 @@ public class ListarBolsista extends JPanel {
 	}
 
 	private void criaJTable() {
-		tabela = new JTable(modelo);
+		tabela = new JTable(modelo) {
+			@Override
+			public boolean isCellEditable(int arg0, int arg1) {
+				return false;
+			}
+		};
 
 		tabela.setPreferredScrollableViewportSize(new Dimension(650, 480));
 		tabela.setDefaultRenderer(Object.class, new ColorRender(2, 0));
