@@ -11,39 +11,35 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import dao.DAOLogin;
+import dao.DAOSetores;
+import modelo.Setores;
 
-public class FormUsuario extends JFrame implements ActionListener {
+public class FormSetores extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane, pnForm;
-	public JTextField tfNome;
-	public JPasswordField tfSenhaOne;
-	public JPasswordField tfSenhaTwo;
+	public JTextField tfNome,tfQntdCotas;
 	private JButton btAdiconar, btLimpar;
 
 	// --------------------------------METODO-PARA-AS-AC�ES-DOS-BOT�ES---------------------------------------
-	@SuppressWarnings("deprecation")
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if (o == btAdiconar) {
-			if (tfSenhaOne.getText().equals(tfSenhaTwo.getText())) {
-				if ((tfNome.getText().isEmpty()) || (tfSenhaTwo.getText().isEmpty())) {
-					JOptionPane.showMessageDialog(null, "Preencher todos os campos");
-				} else {
-					DAOLogin loginDAO = new DAOLogin();
-					loginDAO.adicionaUsuario(tfNome, tfSenhaTwo);
-					JOptionPane.showMessageDialog(null, "Usuário " + tfNome.getText() + " inserido com sucesso! ");
-					limparCampos(pnForm);
-				}
-			}else {
-				JOptionPane.showMessageDialog(null, "As senhas não foram informado corretamente");
+			Setores setores = new Setores();
+			setores.setNome(tfNome.getText());
+			setores.setCotasDisponiveis(tfQntdCotas.getText());
+			
+			if (tfNome.getText().isEmpty())  {
+				JOptionPane.showMessageDialog(null, "O campo nome nao pode retornar vazio");
+			} else {
+				DAOSetores dao = new DAOSetores();
+				dao.adiciona(setores);
+				JOptionPane.showMessageDialog(null, "Setor " + tfNome.getText() + " inserido com sucesso! ");
+				limparCampos(pnForm);
 			}
-
 		} else if (o == btLimpar) {
 			limparCampos(pnForm);
 		}
@@ -59,9 +55,9 @@ public class FormUsuario extends JFrame implements ActionListener {
 		}
 	}
 
-	public FormUsuario() {
+	public FormSetores() {
 		// --------------------------------CONFIG-DA-JANELA---------------------------------------
-		setTitle("Cadastrar Usuário");
+		setTitle("Formulário Setor");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 336, 401);
 		contentPane = new JPanel();
@@ -77,7 +73,7 @@ public class FormUsuario extends JFrame implements ActionListener {
 		contentPane.add(pnForm);
 		pnForm.setLayout(null);
 
-		JLabel lbCadastrarBolsista = new JLabel("CADASTRAR USUÁRIO");
+		JLabel lbCadastrarBolsista = new JLabel("CADASTRAR SETOR");
 		lbCadastrarBolsista.setFont(new Font("Bell MT", Font.BOLD, 18));
 		lbCadastrarBolsista.setBounds(55, 25, 222, 14);
 		contentPane.add(lbCadastrarBolsista);
@@ -85,30 +81,21 @@ public class FormUsuario extends JFrame implements ActionListener {
 		JLabel lbNome = new JLabel("NOME:");
 		lbNome.setBounds(32, 29, 78, 29);
 		pnForm.add(lbNome);
-
-		JLabel lbMatricula = new JLabel("SENHA:");
-		lbMatricula.setBounds(32, 79, 78, 29);
-		pnForm.add(lbMatricula);
-
-		JLabel lbCurso = new JLabel("SENHA:");
-		lbCurso.setBounds(32, 127, 78, 29);
-		pnForm.add(lbCurso);
-
+		
+		JLabel lbQantCotas = new JLabel("Quant. Cotas:");
+		lbQantCotas.setBounds(32, 85, 78, 29);
+		pnForm.add(lbQantCotas);
+		
 		// --------------------------------JTextField---------------------------------------
 		tfNome = new JTextField();
 		tfNome.setBounds(120, 33, 170, 20);
 		pnForm.add(tfNome);
 		tfNome.setColumns(10);
-
-		tfSenhaTwo = new JPasswordField();
-		tfSenhaTwo.setBounds(120, 83, 90, 20);
-		pnForm.add(tfSenhaTwo);
-		tfSenhaTwo.setColumns(10);
 		
-		tfSenhaOne = new JPasswordField();
-		tfSenhaOne.setBounds(120, 130, 90, 20);
-		pnForm.add(tfSenhaOne);
-		tfSenhaOne.setColumns(10);
+		tfQntdCotas = new JTextField();
+		tfQntdCotas.setBounds(120, 89, 170, 20);
+		pnForm.add(tfQntdCotas);
+		tfQntdCotas.setColumns(10);
 
 		// --------------------------------JButton---------------------------------------
 		btAdiconar = new JButton("ADICIONAR");

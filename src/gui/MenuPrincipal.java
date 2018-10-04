@@ -41,7 +41,7 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 		mnlistar.setMnemonic('L');
 		mnCadastro = new JMenu("Adicionar");
 		mnCadastro.setMnemonic('A');
-		mnConfig = new JMenu("Configurações");
+		mnConfig = new JMenu("Configuraï¿½ï¿½es");
 		mnConfig.setMnemonic('C');
 		miSair = new JMenuItem("Sair", new ImageIcon("sair.jpg"));
 		// miSair.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
@@ -54,7 +54,7 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 		miCadastrarProfessor = new JMenuItem("Professor");
 		miPainelInicial = new JMenuItem("Painel Principal");
 		miTrocarUsuario = new JMenuItem("Trocar Usuario");
-		miCadastrarUsuario = new JMenuItem("Cadastrar Usuário");
+		miCadastrarUsuario = new JMenuItem("Cadastrar Usuï¿½rio");
 
 		miPainelInicial.addActionListener(this);
 		miCadastrarBolsista.addActionListener(this);
@@ -116,18 +116,18 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 	}
 	
 	public void listarBolsistas() {
-		panelTrocar = listaBolsista;
+		//panelTrocar = listaBolsista;
 		getContentPane().removeAll();
 		getContentPane().add(panelTrocar);
 		revalidate();
 		repaint();
 	}
 	public void listarProfessores() {
-		panelTrocar = listaProfessor;
+		/*panelTrocar = listaProfessor;
 		getContentPane().removeAll();
 		getContentPane().add(panelTrocar);
 		revalidate();
-		repaint();
+		repaint();*/
 	}
 	
 	public void trocarUsuario() {

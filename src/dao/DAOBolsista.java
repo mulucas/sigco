@@ -22,13 +22,14 @@ public class DAOBolsista {
 	}
 
 	public void adiciona(Bolsista bolsista) {
-		String sql = "INSERT INTO bolsista(nome,matricula,curso, cotasUsadas) VALUES(?,?,?,?)";
+		String sql = "INSERT INTO bolsistas(nome,matricula,curso, cotasUsadas,cotasDisponiveis) VALUES(?,?,?,?,?)";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setString(1, bolsista.getNome());
 			stmt.setString(2, bolsista.getMatricula());
 			stmt.setString(3, bolsista.getCurso());
 			stmt.setString(4, "0");
+			stmt.setInt(5, bolsista.getCotasDisponiveis());
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException u) {
@@ -38,7 +39,7 @@ public class DAOBolsista {
 
 	public void atualizar(Bolsista bolsista) {
 		if (bolsista != null) {
-			String sql = "UPDATE BOLSISTA SET NOME=?, MATRICULA=?, CURSO=? WHERE ID=?";
+			String sql = "UPDATE BOLSISTAS SET NOME=?, MATRICULA=?, CURSO=? WHERE ID=?";
 			try {
 				PreparedStatement stmt = connection.prepareStatement(sql);
 
@@ -55,12 +56,12 @@ public class DAOBolsista {
 						"Erro ao atualizar BOLSISTA no banco de" + "dados " + e.getMessage());
 			}
 		} else {
-			JOptionPane.showMessageDialog(null, "O BOLSISTA enviado por parâmetro está vazio");
+			JOptionPane.showMessageDialog(null, "O BOLSISTA enviado por parï¿½metro estï¿½ vazio");
 		}
 	}
 
 	public void remover(int id) {
-		String sql = "DELETE FROM BOLSISTA WHERE ID =?";
+		String sql = "DELETE FROM BOLSISTAS WHERE ID =?";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, id);
@@ -73,7 +74,7 @@ public class DAOBolsista {
 
 	public List<Bolsista> getBolsista() {
 		ArrayList<Bolsista> bolsistas = new ArrayList<Bolsista>();
-		String sql = "SELECT * FROM BOLSISTA";
+		String sql = "SELECT * FROM BOLSISTAS";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
@@ -99,7 +100,7 @@ public class DAOBolsista {
 
 	public Bolsista getBolsistaById(int id) {
 		Bolsista bolsista = new Bolsista();
-		String sql = "SELECT * FROM BOLSISTA WHERE ID=?";
+		String sql = "SELECT * FROM BOLSISTAS WHERE ID=?";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, id);
@@ -121,7 +122,7 @@ public class DAOBolsista {
 	}
 
 	public void addCota(int idBolsista, int qntd) {
-		String sql = "UPDATE bolsista SET cotasUsadas=? WHERE ID=?";
+		String sql = "UPDATE bolsistas SET cotasUsadas=? WHERE ID=?";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, qntd);
@@ -133,7 +134,7 @@ public class DAOBolsista {
 		}
 	}
 	public void zerarCota(int linha ) {
-		String sql = "UPDATE bolsista SET cotasUsadas=? ";
+		String sql = "UPDATE bolsistas SET cotasUsadas=? ";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, 0);

@@ -6,7 +6,9 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -14,35 +16,33 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import modelo.Professor;
+import modelo.Bolsista;
+import modelo.Setores;
 
-public class EditarProfessor extends JFrame {
+public class EditarSetor extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane, pnForm;
 
 	JLabel lbCadastrarBolsista, lbNome, lbMatricula, lbCurso,lbId;
-	private JTextField tfId, tfNome, tfMatricula,tfNumerosAlunos;
+	private JTextField tfId, tfNome, tfMatricula;
 	private JButton btAlterar, btLimpar;
 
-	Professor professor;
+	Setores setores;
 
-	public EditarProfessor(int id) {
-		DAOProfessor dao = new DAOProfessor();
-		professor = dao.getProfessorById(id);
+	public EditarSetor(int id) {
+		DAOSetores dao = new DAOSetores();
+		setores = dao.getSetorById(id);
 		
 		criaJanela();
 		setVisible(true);
 
-		tfId.setText(Integer.toString(professor.getId()));
-		tfNome.setText(professor.getNome());
-		tfMatricula.setText(professor.getMatricula());
-		tfNumerosAlunos.setText(professor.getQntdAlunos());
-
+		tfId.setText(Integer.toString(setores.getId()));
+		tfNome.setText(setores.getNome());
 	}
 
 	public void criaJanela() {
-		setTitle("Formulário Professor");
+		setTitle("Formulário Setor");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 336, 401);
 		contentPane = new JPanel();
@@ -57,7 +57,7 @@ public class EditarProfessor extends JFrame {
 		contentPane.add(pnForm);
 		pnForm.setLayout(null);
 
-		lbCadastrarBolsista = new JLabel("ALTERAR PROFESSOR");
+		lbCadastrarBolsista = new JLabel("CADASTRAR SETOR");
 		lbCadastrarBolsista.setFont(new Font("Bell MT", Font.BOLD, 18));
 		lbCadastrarBolsista.setBounds(55, 25, 222, 14);
 		contentPane.add(lbCadastrarBolsista);
@@ -70,14 +70,6 @@ public class EditarProfessor extends JFrame {
 		lbNome.setBounds(32, 48, 78, 29);
 		pnForm.add(lbNome);
 
-		lbMatricula = new JLabel("MATRICULA:");
-		lbMatricula.setBounds(32, 85, 78, 29);
-		pnForm.add(lbMatricula);
-
-		lbCurso = new JLabel("Qant. Alunos:");
-		lbCurso.setBounds(32, 127, 78, 29);
-		pnForm.add(lbCurso);
-
 		// --------------------------------JTextField---------------------------------------
 		tfId = new JTextField();
 		tfId.setEnabled(false);
@@ -89,16 +81,6 @@ public class EditarProfessor extends JFrame {
 		tfNome.setBounds(120, 53, 170, 20);
 		pnForm.add(tfNome);
 		tfNome.setColumns(10);
-
-		tfMatricula = new JTextField();
-		tfMatricula.setBounds(120, 89, 170, 20);
-		pnForm.add(tfMatricula);
-		tfMatricula.setColumns(10);
-		
-		tfNumerosAlunos = new JTextField();
-		tfNumerosAlunos.setBounds(120, 131, 170, 20);
-		pnForm.add(tfNumerosAlunos);
-		tfNumerosAlunos.setColumns(10);
 
 		// --------------------------------JButton---------------------------------------
 		btAlterar = new JButton("ALTERAR");
@@ -115,17 +97,15 @@ public class EditarProfessor extends JFrame {
 	private class BtAlterarListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
-			Professor professor = new Professor();
-			professor.setId(Integer.parseInt(tfId.getText()));
-			professor.setNome(tfNome.getText());
-			professor.setMatricula(tfMatricula.getText());
-			professor.setQntdAlunos(tfNumerosAlunos.getText());
-
-			if ((tfNome.getText().isEmpty()) || (tfMatricula.getText().isEmpty())||(tfNumerosAlunos.getText().isEmpty())) {
-				JOptionPane.showMessageDialog(null, "Os campos n�o podem retornar vazios");
+			Setores setores = new Setores();
+			setores.setId(Integer.parseInt(tfId.getText()));
+			setores.setNome(tfNome.getText());
+			
+			if (tfNome.getText().isEmpty()) {
+				JOptionPane.showMessageDialog(null, "Os campos não podem retornar vazios");
 			} else {
-				DAOProfessor dao = new DAOProfessor();
-				dao.atualizar(professor);
+				DAOSetores dao = new DAOSetores();
+				dao.atualizar(setores);
 				dispose();
 			}
 		}
@@ -146,4 +126,5 @@ public class EditarProfessor extends JFrame {
 			}
 		}
 	}
+
 }

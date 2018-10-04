@@ -12,7 +12,7 @@ public class ConnectionFactory {
 	    public Connection getConnection() {
 			try {
 		        Class.forName(drive);
-		        con = DriverManager.getConnection("jdbc:mysql://localhost/sigco","root","280697");
+		        con = DriverManager.getConnection("jdbc:mysql://localhost/sigco","root","comult");
 		          
 			}         
 			catch(SQLException excecao) {

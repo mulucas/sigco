@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -20,7 +21,7 @@ import funcoes.ColorRender;
 import gui.MenuPrincipal;
 import modelo.Bolsista;
 
-public class ListarBolsista extends JPanel {
+public class ListarBolsista extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel painelFundo;
@@ -68,6 +69,9 @@ public class ListarBolsista extends JPanel {
 
 	private void criaJTable() {
 		tabela = new JTable(modelo) {
+			
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean isCellEditable(int arg0, int arg1) {
 				return false;
@@ -141,7 +145,7 @@ public class ListarBolsista extends JPanel {
 				pesquisar(modelo);
 
 			} else {
-				JOptionPane.showMessageDialog(null, "É necesário selecionar uma linha.");
+				JOptionPane.showMessageDialog(null, "Ã© necessario selecionar uma linha");
 			}
 		}
 	}
@@ -155,7 +159,7 @@ public class ListarBolsista extends JPanel {
 				int idBolsista = (int) tabela.getValueAt(linhaSelecionada, 0);
 				EditarBolsista ib = new EditarBolsista(idBolsista);
 			} else {
-				JOptionPane.showMessageDialog(null, "É necesário selecionar uma linha.");
+				JOptionPane.showMessageDialog(null, "Ã© necessario selecionar uma linha");
 			}
 		}
 	}
@@ -179,7 +183,7 @@ public class ListarBolsista extends JPanel {
 				modelo.removeRow(linhaSelecionada);
 				setBotoes(false, false, false, true, true);
 			} else {
-				JOptionPane.showMessageDialog(null, "É necesário selecionar uma linha.");
+				JOptionPane.showMessageDialog(null, "Ã© necessario selecionar uma linha");
 			}
 		}
 	}

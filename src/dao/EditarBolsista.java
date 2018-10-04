@@ -44,7 +44,7 @@ public class EditarBolsista extends JFrame {
 	}
 
 	public void criaJanela() {
-		setTitle("Formulário bolsista");
+		setTitle("FormulÃ¡rio bolsista");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 336, 401);
 		contentPane = new JPanel();
@@ -128,7 +128,7 @@ public class EditarBolsista extends JFrame {
 
 			if ((tfNome.getText().isEmpty()) || (tfMatricula.getText().isEmpty())
 					|| (cbCurso.getSelectedItem().equals("SELECIONAR..."))) {
-				JOptionPane.showMessageDialog(null, "Os campos não podem retornar vazios");
+				JOptionPane.showMessageDialog(null, "Os campos nï¿½o podem retornar vazios");
 			} else {
 				DAOBolsista dao = new DAOBolsista();
 				dao.atualizar(bolsista);

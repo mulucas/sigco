@@ -10,6 +10,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import conecao.ConnectionFactory;
+import gui.Inicio;
 import gui.MenuPrincipal;
 import modelo.Bolsista;
 
@@ -45,9 +46,10 @@ public class DAOLogin {
 				}
 			}
 			if (verificaUsuarioNoBanco) {
-				MenuPrincipal.abrir();
+				//MenuPrincipal.abrir();
+				Inicio.abrir();
 			} else {
-				JOptionPane.showMessageDialog(null, "Usuário ou senha incorreto!");
+				JOptionPane.showMessageDialog(null, "Usuï¿½rio ou senha incorreto!");
 			}
 			rs.close();
 			stmt.close();

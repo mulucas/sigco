@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -17,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import funcoes.ColorRender;
 import modelo.Professor;
 
-public class ListarProfessor extends JPanel {
+public class ListarProfessor extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel painelFundo;
@@ -80,7 +81,7 @@ public class ListarProfessor extends JPanel {
 		modelo.addColumn("Id");
 		modelo.addColumn("Nome");
 		modelo.addColumn("Matricula");
-		modelo.addColumn("Nº de Alunos");
+		modelo.addColumn("NÂº de Alunos");
 		modelo.addColumn("Disponivel");
 		modelo.addColumn("Usados");
 		tabela.getColumnModel().getColumn(0).setPreferredWidth(30);
@@ -140,7 +141,7 @@ public class ListarProfessor extends JPanel {
 				pesquisar(modelo);
 				
 			} else {
-				JOptionPane.showMessageDialog(null, "É necesário selecionar uma linha.");
+				JOptionPane.showMessageDialog(null, "Ã© necessario selecionar uma linha.");
 			}
 		}
 	}
@@ -154,7 +155,7 @@ public class ListarProfessor extends JPanel {
 				int idProfessor = (int) tabela.getValueAt(linhaSelecionada, 0);
 				EditarProfessor ib = new EditarProfessor(idProfessor);
 			} else {
-				JOptionPane.showMessageDialog(null, "É necesário selecionar uma linha.");
+				JOptionPane.showMessageDialog(null, "Ã© necessario selecionar uma linha");
 			}
 		}
 	}
@@ -178,7 +179,7 @@ public class ListarProfessor extends JPanel {
 				modelo.removeRow(linhaSelecionada);
 				setBotoes(false, false, false, true, true);
 			} else {
-				JOptionPane.showMessageDialog(null, "É necesário selecionar uma linha.");
+				JOptionPane.showMessageDialog(null,"Ã© necessario selecionar uma linha");
 			}
 		}
 	}

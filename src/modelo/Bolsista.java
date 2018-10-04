@@ -2,8 +2,7 @@ package modelo;
 
 public class Bolsista {
 
-	private int id, cotasDisponiveis, cotasUsadas;
-
+	private int id, cotasUsadas, cotasDisponiveis;
 	public int getCotasUsadas() {
 		return cotasUsadas;
 	}

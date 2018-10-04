@@ -43,9 +43,11 @@ public class FormProfessor extends JFrame implements ActionListener{
 			professor.setNome(tfNome.getText());
 			professor.setMatricula(tfMatricula.getText());
 			professor.setQntdAlunos(tfqntdAlunos.getText());
+			int valor = Integer.parseInt(tfqntdAlunos.getText());
+			professor.setCotasDisponiveis(valor);
 
 			if ((tfNome.getText().isEmpty()) || (tfMatricula.getText().isEmpty())||(tfqntdAlunos.getText().isEmpty())) {
-				JOptionPane.showMessageDialog(null, "Os campos n„o podem retornar vazios");
+				JOptionPane.showMessageDialog(null, "Os campos n√£o podem retornar vazios");
 			} else {
 				DAOProfessor dao = new DAOProfessor();
 				dao.adiciona(professor);
@@ -59,7 +61,7 @@ public class FormProfessor extends JFrame implements ActionListener{
     } 
 	public FormProfessor() {
 		//--------------------------------CONFIG-DA-JANELA---------------------------------------
-		setTitle("Formul·rio Professor");
+		setTitle("Formul√°rio Professor");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 336, 401);
 		contentPane = new JPanel();
@@ -87,7 +89,7 @@ public class FormProfessor extends JFrame implements ActionListener{
 		lbMatricula.setBounds(32, 79, 78, 29);
 		pnForm.add(lbMatricula);
 		
-		lbqntdAlunos = new JLabel("QUANTIDADE DE ALUNOS:");
+		lbqntdAlunos = new JLabel("COTAS:");
 		lbqntdAlunos.setBounds(32, 129, 150, 29);
 		pnForm.add(lbqntdAlunos);
 		
@@ -103,7 +105,7 @@ public class FormProfessor extends JFrame implements ActionListener{
 		tfMatricula.setColumns(10);
 		
 		tfqntdAlunos = new JTextField();
-		tfqntdAlunos.setBounds(215, 133, 60, 20);
+		tfqntdAlunos.setBounds(130, 133, 147, 20);
 		pnForm.add(tfqntdAlunos);
 		tfqntdAlunos.setColumns(10);
 		

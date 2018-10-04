@@ -21,9 +21,9 @@ public class DAOProfessor {
 	}
 
 	public void adiciona(Professor professor) {
-		int c = Integer.parseInt(professor.getQntdAlunos());
+		/*int c = Integer.parseInt(professor.getQntdAlunos());
 		int d = c * 12;
-		String vc = Integer.toString(d);
+		String vc = Integer.toString(d);*/
 
 		String sql = "INSERT INTO professor(nome,matricula,numeroAlunos,cotasDisponiveis) VALUES(?,?,?,?)";
 		try {
@@ -31,7 +31,7 @@ public class DAOProfessor {
 			stmt.setString(1, professor.getNome());
 			stmt.setString(2, professor.getMatricula());
 			stmt.setString(3, professor.getQntdAlunos());
-			stmt.setString(4, vc);
+			stmt.setInt(4, professor.getCotasDisponiveis());
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException u) {
@@ -58,7 +58,7 @@ public class DAOProfessor {
 						"Erro ao atualizar Professor no banco de" + "dados " + e.getMessage());
 			}
 		} else {
-			JOptionPane.showMessageDialog(null, "O Professor enviado por parâmetro está vazio");
+			JOptionPane.showMessageDialog(null, "O Professor enviado por parï¿½metro estï¿½ vazio");
 		}
 	}
 

@@ -15,10 +15,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
 
 import dao.DAOBolsista;
-import dao.ListarBolsista;
 import modelo.Bolsista;
 
 public class FormBolsista extends JFrame implements ActionListener {
@@ -26,26 +24,28 @@ public class FormBolsista extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane, pnForm;
 	public JTextField tfNome;
-	public JTextField tfMatricula;
+	public JTextField tfMatricula, tfCotas;
 	private JButton btAdiconar, btLimpar;
 	private JComboBox cbCurso;
 
-	// --------------------------------METODO-PARA-AS-ACÕES-DOS-BOTÕES---------------------------------------
+	// --------------------------------METODO-PARA-AS-ACï¿½ES-DOS-BOTï¿½ES---------------------------------------
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if (o == btAdiconar) {
 			Bolsista bolsista = new Bolsista();
 			bolsista.setNome(tfNome.getText());
 			bolsista.setMatricula(tfMatricula.getText());
+			int valor = Integer.parseInt(tfCotas.getText());
+			bolsista.setCotasDisponiveis(valor);
 			bolsista.setCurso(cbCurso.getSelectedItem().toString());
 
-			if ((tfNome.getText().isEmpty()) || (tfMatricula.getText().isEmpty())
+			if ((tfNome.getText().isEmpty()) || (tfCotas.getText().isEmpty()) || (tfMatricula.getText().isEmpty())
 					|| (cbCurso.getSelectedItem().equals("SELECIONAR..."))) {
-				JOptionPane.showMessageDialog(null, "Os campos não podem retornar vazios");
+				JOptionPane.showMessageDialog(null, "Os campos nÃ£o podem retornar vazios");
 			} else {
 				DAOBolsista dao = new DAOBolsista();
 				dao.adiciona(bolsista);
-				JOptionPane.showMessageDialog(null, "Usuário " + tfNome.getText() + " inserido com sucesso! ");
+				JOptionPane.showMessageDialog(null, "Bolsista " + tfNome.getText() + " inserido com sucesso! ");
 				limparCampos(pnForm);
 			}
 		} else if (o == btLimpar) {
@@ -65,7 +65,7 @@ public class FormBolsista extends JFrame implements ActionListener {
 
 	public FormBolsista() {
 		// --------------------------------CONFIG-DA-JANELA---------------------------------------
-		setTitle("Formulário bolsista");
+		setTitle("FormulÃ¡rio bolsista");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 336, 401);
 		contentPane = new JPanel();
@@ -87,15 +87,19 @@ public class FormBolsista extends JFrame implements ActionListener {
 		contentPane.add(lbCadastrarBolsista);
 
 		JLabel lbNome = new JLabel("NOME:");
-		lbNome.setBounds(32, 29, 78, 29);
+		lbNome.setBounds(32, 10, 78, 29);
 		pnForm.add(lbNome);
 
 		JLabel lbMatricula = new JLabel("MATRICULA:");
-		lbMatricula.setBounds(32, 79, 78, 29);
+		lbMatricula.setBounds(32, 50, 78, 29);
 		pnForm.add(lbMatricula);
+		
+		JLabel qntdCotas = new JLabel("COTAS:");
+		qntdCotas.setBounds(32, 90, 78, 29);
+		pnForm.add(qntdCotas);
 
 		JLabel lbCurso = new JLabel("CURSO:");
-		lbCurso.setBounds(32, 127, 78, 29);
+		lbCurso.setBounds(32, 130, 78, 29);
 		pnForm.add(lbCurso);
 
 		// --------------------------------JComboBox---------------------------------------
@@ -107,14 +111,19 @@ public class FormBolsista extends JFrame implements ActionListener {
 
 		// --------------------------------JTextField---------------------------------------
 		tfNome = new JTextField();
-		tfNome.setBounds(120, 33, 170, 20);
+		tfNome.setBounds(120, 13, 170, 20);
 		pnForm.add(tfNome);
 		tfNome.setColumns(10);
 
 		tfMatricula = new JTextField();
-		tfMatricula.setBounds(120, 83, 170, 20);
+		tfMatricula.setBounds(120, 54, 170, 20);
 		pnForm.add(tfMatricula);
 		tfMatricula.setColumns(10);
+		
+		tfCotas = new JTextField();
+		tfCotas.setBounds(120, 94, 170, 20);
+		pnForm.add(tfCotas);
+		tfCotas.setColumns(10);
 
 		// --------------------------------JButton---------------------------------------
 		btAdiconar = new JButton("ADICIONAR");
