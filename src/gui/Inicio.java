@@ -275,7 +275,7 @@ public class Inicio extends JFrame {
 		jMenuItemSair.setText("Sair");
 		jMenuItemSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				dispose();
+				System.exit(0);
 			}
 		});
 		jMenuConfig.add(jMenuItemAddUsuario);
