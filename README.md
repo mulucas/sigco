@@ -15,7 +15,7 @@ Software simples em java para o controle de cotas dos bolsistas, professores e s
 - **MySQL** como banco de dados
 
 # Modelagem
-vou adicionar a modelagem aqui ainda
+![modelobds](https://user-images.githubusercontent.com/35462940/52565679-47181780-2de6-11e9-81c2-a7c67f5f8a52.png)
 
 ## Telas
 
