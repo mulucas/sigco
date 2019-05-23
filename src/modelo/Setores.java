@@ -1,8 +1,8 @@
 package modelo;
 
 public class Setores {
-	private String nome,cotasDisponiveis;
-	private int id,  cotasUsadas;
+	private String nome;
+	private int id,  cotasUsadas,cotasDisponiveis;
 	
 	public String getNome() {
 		return nome;
@@ -16,10 +16,10 @@ public class Setores {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getCotasDisponiveis() {
+	public int getCotasDisponiveis() {
 		return cotasDisponiveis;
 	}
-	public void setCotasDisponiveis(String cotasDisponiveis) {
+	public void setCotasDisponiveis(int cotasDisponiveis) {
 		this.cotasDisponiveis = cotasDisponiveis;
 	}
 	public int getCotasUsadas() {

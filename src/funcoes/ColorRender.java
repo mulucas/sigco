@@ -65,12 +65,10 @@ public class ColorRender extends DefaultTableCellRenderer {
 					}
 				}
 				if (codTabela == 3) {
-					String a =  (String) table.getValueAt(row, 2);
+					int a =  (int) table.getValueAt(row, 2);
 					int b = (int) table.getValueAt(row, 3);
 					
-					int i = Integer.parseInt(a);
-
-					if (i <= b) { // Sempre que a coluna X n�o possuir valor, pinte:
+					if (a <= b) { // Sempre que a coluna X n�o possuir valor, pinte:
 						setFont(new Font("Tahoma", 1, 12));
 						setForeground(new Color(150, 0, 0));
 					} else {

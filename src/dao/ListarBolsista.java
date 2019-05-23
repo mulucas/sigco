@@ -1,11 +1,9 @@
 package dao;
 
 import java.awt.BorderLayout;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,7 +16,6 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import funcoes.ColorRender;
-import gui.MenuPrincipal;
 import modelo.Bolsista;
 
 public class ListarBolsista extends JFrame {

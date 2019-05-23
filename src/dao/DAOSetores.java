@@ -24,7 +24,7 @@ public class DAOSetores {
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setString(1, setores.getNome());
-			stmt.setString(2, setores.getCotasDisponiveis());
+			stmt.setInt(2, setores.getCotasDisponiveis());
 			stmt.setString(3, "0");
 			stmt.execute();
 			stmt.close();
@@ -78,7 +78,7 @@ public class DAOSetores {
 				bolsista.setId(rs.getInt("id"));
 				bolsista.setNome(rs.getString("nome"));
 				bolsista.setCotasUsadas(rs.getInt("cotasUsadas"));
-				bolsista.setCotasDisponiveis(rs.getString("cotasDisponiveis"));
+				bolsista.setCotasDisponiveis(rs.getInt("cotasDisponiveis"));
 				bolsistas.add(bolsista);
 			}
 			rs.close();

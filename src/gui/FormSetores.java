@@ -30,7 +30,8 @@ public class FormSetores extends JFrame implements ActionListener {
 		if (o == btAdiconar) {
 			Setores setores = new Setores();
 			setores.setNome(tfNome.getText());
-			setores.setCotasDisponiveis(tfQntdCotas.getText());
+			int valor = Integer.parseInt(tfQntdCotas.getText());
+			setores.setCotasDisponiveis(valor);
 			
 			if (tfNome.getText().isEmpty())  {
 				JOptionPane.showMessageDialog(null, "O campo nome nao pode retornar vazio");
